@@ -26,7 +26,10 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    return localStorage.user;
+    if (localStorage.user){
+      return localStorage.user;
+    } 
+    return undefined;
   }
 
   /**
@@ -34,12 +37,19 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-    userFetch = createRequest(this.url + '/current', this.current(), 'GET', callback);
-    if (userFetch.succeess) {
-      this.setCurrent(userFetch);
-    } else {
-      this.unsetCurrent();
-    }
+      createRequest({
+        url: this.url + "/current", 
+        data: this.current(), 
+        method: 'GET', 
+        callback: (err, response) => {
+          if (response.success) {
+            this.setCurrent(response.user);
+          } else {
+            this.unsetCurrent();
+          }
+          callback(err, response);
+        }
+      })
   }
 
   /**
@@ -69,10 +79,17 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-    userRegister = createRequest(this.url + '/register', data, 'POST', callback);
-    if (userRegister.succeess) {
-      this.setCurrent(userRegister);
-    }
+    createRequest({
+      url: this.url + "/register", 
+      data: data, 
+      method: 'POST', 
+      callback: (err, response) => {
+        if (response.success) {
+          this.setCurrent(response.user);
+        }
+        callback(err, response);
+      }
+    })  
   }
 
 
@@ -81,9 +98,17 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-    userLogout = createRequest(this.url + '/logout', data, 'POST', callback);
-    if (userRegister.succeess) {
-      this.unsetCurrent();
-    }
+    createRequest({
+      url: this.url + "/logout", 
+      data: this.current(), 
+      method: 'POST', 
+      callback: (err, response) => {
+        if (response.success) {
+          this.unsetCurrent();
+        }
+        callback(err, response);
+      }
+    })
   }
+  
 }

@@ -12,7 +12,11 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-
+    if (element === '' || element === null || element === undefined) {
+      alert('ошибка. Передан неверный элемент');
+    } else {
+      this.element = element;
+    }
   }
 
   /**
@@ -23,6 +27,9 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update(){
-
+    let userData = User.current();
+    if (userData) {
+      this.element.user.name = userData.name;
+    }
   }
 }

@@ -12,7 +12,12 @@ class TransactionsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (!element) {
+      alert('ошибка. переданный элемент не существует');
+    } else {
+      this.element = element;
+      this.registerEvents();
+    }
   }
   /**
    * Регистрирует обработчики нажатия на
@@ -21,6 +26,12 @@ class TransactionsWidget {
    * экземпляра окна
    * */
   registerEvents() {
-
+    this.element.addEventListener('click', () => {
+      if (this.element.className === "create-income-button") {
+        new Modal.open(App.getModal("newIncome"));
+      } else {
+        new Modal.open(App.getModal("newExpense"));
+      }
+    })
   }
 }
