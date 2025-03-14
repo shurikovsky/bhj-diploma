@@ -12,8 +12,8 @@ class TransactionsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-    if (!element) {
-      alert('ошибка. переданный элемент не существует');
+    if (element === null) {
+      throw "пустой элемент";
     } else {
       this.element = element;
       this.registerEvents();

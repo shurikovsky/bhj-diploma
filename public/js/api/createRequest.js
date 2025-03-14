@@ -9,9 +9,6 @@ const createRequest = (options = {})=> {
   let method = options.method;
   let data = options.data;
   if (options.method) {
-    data = options.data;
-    method = options.method;
-    url = options.url;
       if (method === "GET") {
          url += "?";
          for (let key in data) {

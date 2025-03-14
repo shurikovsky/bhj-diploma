@@ -12,8 +12,8 @@ class Modal {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-    if (element === '' || element === null || element === undefined) {
-      alert('ошибка. Передан неверный элемент');
+    if (element === null) {
+      throw "пустой элемент";
     } else {
       this.element = element;
       this.registerEvents();
@@ -26,8 +26,12 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    if (this.element.dataset.dismiss === 'modal') {
-      this.onClose(element);
+    let button = [... this.element.getElementsByTagName('button')];
+    if (button.dataset) {
+      console.log(button.dataset);
+      button.addEventListener('click', () => {
+        this.onClose(this.element);
+      })
     }
   }
 

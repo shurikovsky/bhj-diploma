@@ -13,8 +13,8 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor(element) {
-    if (element === '' || element === null || element === undefined) {
-      alert('ошибка. Передан неверный элемент');
+    if (element === null) {
+      throw "пустой элемент";
     } else {
       this.element = element;
       this.registerEvents();
