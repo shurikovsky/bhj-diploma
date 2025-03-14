@@ -27,13 +27,16 @@ class Modal {
    * */
   registerEvents() {
     let button = [... this.element.getElementsByTagName('button')];
-    if (button.dataset) {
-      console.log(button.dataset);
-      button.addEventListener('click', () => {
+    button.forEach((item) => {
+      if (item.dataset) {
+        console.log(item.dataset);
+        item.addEventListener('click', () => {
         this.onClose(this.element);
-      })
-    }
-  }
+        })
+      }
+    })
+   }
+  
 
   /**
    * Срабатывает после нажатия на элементы, закрывающие окно.
@@ -53,6 +56,6 @@ class Modal {
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close(){
-    this.element.style.display = none;
+    this.element.style.display = 'none';
   }
 }
